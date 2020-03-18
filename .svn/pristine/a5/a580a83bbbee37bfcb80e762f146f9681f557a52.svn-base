@@ -1,0 +1,304 @@
+mercury {
+  fdr {
+    Appointment = ["Appointments"]
+    Assessment = ["Labresult", "Observation"]
+    Diagnosis = ["Diagnosis"]
+    Medication = ["Rxadmin", "Rxorder", "Rxpatientreported"]
+    //Immunization = ["Immunizations"]
+    Procedure = ["Procedures"]
+    Visit = ["Visits"]
+  }
+
+  fdrhybrid {
+    default {
+      Appointment = ["Appointments"]
+      Assessment = ["Labresult", "Observation"]
+      Diagnosis = ["Diagnosis"]
+      Medication = ["Rxadmin", "Rxorder", "Rxpatientreported"]
+      //Immunization = ["Immunizations"]
+      Procedure = ["Procedures"]
+      Visit = ["Visits"]
+    }
+  }
+
+
+  backend {
+    default {
+      Procedure = ["Backend"]
+      Diagnosis = ["Backend"]
+      Labresult = ["Backend"]
+    }
+  }
+
+  asent {
+    default {
+    Allergies = ["Allergies"]
+    Appointment = ["Asappointment"]
+    Appointmentex = ["Asappointment"]
+    Appointmentlocation = ["Locationde"]
+    Claim = ["Charges", "Orders"]
+    Clinicalencounter = ["Encounters"]
+    Diagnosis = ["Charges", "Encounters", "Problems"]
+    Encounterprovider = ["Ascharges", "Asorders", "Encounter"]
+    Facility = ["Zclocation"]
+    Immunization = ["Immunizations"]
+    Insurance = ["Encounters"]
+    Labresult = ["Flowsheet", "Results", "Vitals"]
+    Observation = ["Encounters", "Flowsheet", "Healthmaintenance", "Hmdeferrals", "Orders", "Problems", "Results", "Vitals", "Vitalsphq"]
+    Patient = ["Patdem"]
+    Patientaddress = ["Patdem"]
+    Patientcontact = ["Patdem"]
+    Patientdetail = ["City", "Deceased", "Ethnicity", "Firstname", "Gender", "Language", "Lastname", "Marital", "Middlename", "Race", "State", "Zipcode"]
+    Patientidentifier = ["Patdem"]
+    Patientreportedmeds = ["Erx", "Reconciledlist"]
+    Procedure = ["Charges", "Healthmaintenance", "Orders", "Reconciledlist", "Results", "Vitals"]
+    Provider = ["Alliedprovider", "Aszhcredentialde", "Resourcede"]
+    Provideridentifier = ["Staffinfo"]
+    Providerpatientrelation = ["Registration"]
+    Providerspecialty = ["Staffinfo"]
+    Rxordersandprescriptions = ["Erx"]
+    }
+  }
+
+  athena {
+    default {
+      Allergies = ["Allergy"]
+      Appointment = ["Appointment"]
+      Appointmentlocation = ["Department"]
+      Claim = ["Transaction"]
+      Clinicalencounter = ["Appointment", "Clinicalencounter"]
+      Diagnosis = ["Claimdiagnosis", "Clinicalencounterdiagnosis", "Patientproblem"]
+      Encounterprovider = ["Clinicalencounter"]
+      Facility = ["Department"]
+      Immunization = ["Patientvaccinecv", "Patientvaccinepv"]
+      Insurance = ["Claim"]
+      Labmapperdict = ["Clinicalresultobservation", "Document", "Labresult", "Vitalsign"]
+      Labresult = ["Clinicalresultobservation", "Vitalsign"]
+      Observation = ["Chartquestionnaire", "Clinicalresultobservation", "Document", "Patientassertion", "Patientassertiondepression",
+                    "Patientobgynhistory", "Patientsocialhistory", "Qmresult", "Qmresultexclude", "Vitalsign"]
+      Patient = ["Patient"]
+      Patientaddress = ["Patient"]
+      PatientContact = ["Patient"]
+      Patientdetail = ["Patient"]
+      Patientidentifier = ["Customdemographics", "Patient", "Patientinsuranceremove"]
+      Procedure = ["Document", "Flowsheet", "Patientassertion", "Patientmedication", "Patientobgynhistory", "Patientsurgerycust",
+                    "Patientsurgerystd", "Qmresult", "Transaction"]
+      Provider = ["Clinicalprovider", "Provider", "Referringprovider"]
+      Provideridentifier = ["Clinicalprovider", "Provider", "Referringprovider"]
+      Providerpatientrelation = ["Provpatrel"]
+      Providerspecialty = ["Provider", "Referringprovider"]
+      Rxmedadministrations = ["Patientmedication"]
+      Rxordersandprescriptions = ["Patientmedicationcp", "Patientmedicationpm"]
+    }
+    athena_pm {
+      Patient = ["Patient"]
+      Patientaddress = ["Patient"]
+      PatientContact = ["Patient"]
+      Patientdetail = ["Patient"]
+      Patientidentifier = ["Patient"]
+      Provider = ["Clinicalprovider", "Provider", "Referringprovider"]
+      Provideridentifier = ["Clinicalprovider", "Provider", "Referringprovider"]
+      Providerpatientrelation = ["Provpatrel"]
+      Providerspecialty = ["Provider", "Referringprovider"]
+    }
+  }
+
+  hl7_v2 {
+    default {
+      Allergies = ["Al1"]
+      Appointment = ["Siu"]
+      Appointmentlocation = ["Ail"]
+      Patient = ["Pid"]
+      Patientaddress = ["Pid"]
+      Patientcontact = ["Pid", "Z"]
+      Patientdetail = ["Deceased", "Ethnicity", "Firstname", "Gender", "Language", "Lastname",
+        "Maritalstatus", "Middlename", "Race", "Religion"]
+      Patientidentifier = ["Pid"]
+      Diagnosis = ["Dg1"]
+      Labresult = ["Obx"]
+      Clinicalencounter = ["Pv1"]
+      Encounterprovider = ["Pv1"]
+      Observation = ["Obx"]
+      Facility = ["Pv1"]
+      Provider = ["Pv1", "Pd1"]
+      Procedure = ["Pr1"]
+      Claim = ["Pr1"]
+      Immunization = ["Rxa"]
+      Insurance = ["In1"]
+      Patientreportedmeds = ["Rxd"]
+      Providerpatientrelation = ["Pd1"]
+    }
+    h704847_hl7_ocie {
+      Patient = ["Pid"]
+      Patientaddress = ["Pid"]
+      Patientcontact = ["Pid", "Z"]
+      Patientdetail = ["Deceased", "Ethnicity", "Firstname", "Gender", "Language", "Lastname",
+        "Maritalstatus", "Middlename", "Race", "Religion"]
+      Patientidentifier = ["Pid"]
+      Clinicalencounter = ["Pv1"]
+      Encounterprovider = ["Pv1"]
+      Diagnosis = ["Dg1"]
+      Insurance = ["In1"]
+      Labresult = ["Obx"]
+      Facility = ["Pv1"]
+      Provider = ["Pv1"]
+    }
+    h704847_hl7_ccd {
+      Patient = ["Pid"]
+      Patientaddress = ["Pid"]
+      Patientcontact = ["Pid", "Z"]
+      Patientdetail = ["Deceased", "Ethnicity", "Firstname", "Gender", "Language", "Lastname",
+        "Maritalstatus", "Middlename", "Race", "Religion", "State", "City", "Zipcode"]
+      Patientidentifier = ["Pid"]
+      Clinicalencounter = ["Pv1"]
+      Encounterprovider = ["Pv1"]
+      Diagnosis = ["Dg1"]
+      Insurance = ["In1"]
+      Labresult = ["Obx"]
+      Facility = ["Pv1"]
+      Provider = ["Pv1"]
+    }
+    h704847_hl7_elys {
+      Allergies = ["Al1"]
+      Patient = ["Pid"]
+      Patientaddress = ["Pid"]
+      Patientcontact = ["Pid", "Z"]
+      Patientdetail = ["Deceased", "Ethnicity", "Firstname", "Gender", "Language", "Lastname",
+        "Maritalstatus", "Middlename", "Race", "Religion", "State", "City", "Zipcode"]
+      Patientidentifier = ["Pid"]
+      Diagnosis = ["Dg1"]
+      Patientreportedmeds = ["Rxd"]
+    }
+  }
+
+  dcdr {
+    Diagnosis = ["Diagnosis"]
+  }
+
+  epic_v2 {
+    default {
+      Allergies = ["Allergies", "Alert"]
+      Appointment = ["Encountervisit"]
+      Appointmentex = ["Encountervisit"]
+      Appointmentlocation = ["Dept"]
+      Claim = ["Inptbillingacct", "Profbilling", "Hspacctcpt"]
+      Clinicalencounter = ["Encountervisit", "Profbilling"]
+      Diagnosis = ["Inptbillingdx", "Orderdxproc", "Patencdx", "Problemlist", "Profbilling"]
+      Encountercarearea = ["Encountervisit"]
+      Encounterprovider = ["Encountervisit", "Marbillingprovider", "Hspatndprov", "Medorders", "Profbilling", "Hsptrmtteam"]
+      Encounterreason = ["Patencrsn"]
+      Facility = ["Locationid"]
+      Healthmaintenance = ["Patienthmtstatus"]
+      Immunization = ["Immunization"]
+      Insurance = ["Encountervisit", "Inptbillingacct", "Patacctcvg", "Profbilling"]
+      Labresult = ["Orderresults", "Patass"]
+      Labmapperdict = ["Labmapper", "O2sats"]
+      Microbioorder = ["Generalorders"]
+      Microbioresult = ["Generalorders"]
+      Observation = ["Department", "Encountervisit", "Encountervisitavs", "Orderresults", "Patenc3", "Patass", "Patientmyc", "Sochistory", "Docinformation"
+        , "Encountervisitpatclass", "Generalordersdesc", "Hmhistory", "Hmmodifier", "Hmtppn", "Smrtdtaelem", "Notesmarttextids", "Problemlist", "Ordermetrics"
+        , "Smartlistsused", "Patientfyiflags", "Encountervisitgestage", "Ptgoalsinfo", "Hhepsdinfo", "Clqanswerqa", "Patencquesr", "Referral", "Patasslvef"
+        , "Patencconcept", "Patreg"]
+      Patient = ["Patreg"]
+      Patientaddress = ["Patreg"]
+      Patientcontact = ["Othercommunctn", "Patreg"]
+      Patientdetail = ["City", "Desceased", "Ethnicity", "Gender", "Lastname", "Maritalstatus", "Middlename", "Race", "State", "Zipcode", "Firstname", "Language"]
+      Patientidentifier = ["Patreg", "Identityid", "Identityidhx", "Identityidsubtype"]
+      Patientpopulation = ["Patienttype"]
+      Patientreportedmeds = ["Medorders", "Patenccurrmeds"]
+      Procedure = ["Generalorders", "Generalorderscustom", "Hmhistory", "Hspacctpxlist", "Immunizations", "Inptbillingacct", "Smrtdtaelempairs"
+        , "Medsrevhx", "Patass", "Patencrsn", "Profbilling", "Smrtdtaelem", "Edieveventinfo", "Medadminrec", "Orlog", "Orderresults", "Hspacctcpt", "Fiphspadmission"
+        , "Clqanswerqa", "Patencconcept", "Patienthmtstatus"]
+      Provider = ["Zhproviderattr", "Zhreferralsrc"]
+      Provideridentifier = ["Zhproviderattr"]
+      Providercontact = ["Zhproviderattr"]
+      Providerpatientrelation = ["Zhpatpcp"]
+      Providerspecialty = ["Zhproviderattr"]
+      Rxmedadministrations = ["Medadminrec"]
+      Rxordersandprescriptions = ["Medorders"]
+      Treatmentadmin = ["Medadminrec", "Orderresults", "Patass"]
+      Treatmentorder = ["Generalorders"]
+      Zhserviceline = ["Service"]
+    }
+    h641171_h557_ep2 {
+      Patientcustomattribute = ["Careteamedithxccf"]
+    }
+  }
+
+
+  asscm {
+    Allergies = ["Cv3allergydeclaration"]
+    Appointment = ["Cv3clientvisit"]
+    Appointmentlocation = ["Zhcv3location"]
+    Clinicalencounter = ["Cv3clientvisit"]
+    Diagnosis = ["Cv3healthissuedeclaration"]
+    Encountercarearea = ["Cv3clientvisit", "Cv3clientvisitlocation"]
+    Encounterprovider = ["Cv3careprovidervisitrole"]
+    Encounterreason = ["Cv3healthissuedeclaration"]
+    Facility = ["Zhcv3location"]
+    Immunization = ["Sxahmscheduledeventoccurrence", "Sxaimmpatientimmunizationhist", "Zsxahmvaccineadmindata"]
+    Labmapperdict = ["Zhcv3obscatalogitem", "Zhcv3resultcatalogitem", "Zhsxahmevent"]
+    Labresult = ["Cv3basicobservation", "Sxahmscheduledeventoccurrence"]
+    Medmapsource = ["Cv3allergydeclaration"]
+    Microbioorder = ["Cv3order"]
+    Microbioresult = ["Basicobservation"]
+    Observation = ["Cv3basicobservation", "Cv3observationarc", "Cv3observationcur", "Cv3ordertaskoccurrence",
+      "Cv3physicalnotedeclaration", "Sxaambpatienteducationlog"]
+    Patient = ["Cv3client"]
+    Patientaddress = ["Cv3address"]
+    Patientdetail = ["Deceased", "Ethnicity", "Firstname", "Gender", "Language", "Lastname", "Maritalstatus",
+      "Middlename", "Race", "Religion"]
+    Patientidentifier = ["Cv3clientid"]
+    Patientreportedmeds = ["Cv3order", "Sxaambclientprescription"]
+    Procedure = ["Cv3basicobservation", "Cv3basicobservationpair", "Cv3clientdocument", "Cv3observationdate",
+      "Cv3observationdone", "Cv3order", "Cv3ordersigdtm", "Sxaambpatienteducationlog",
+      "Sxahmscheduledeventoccurrence"]
+    Provider = ["Zhcv3careprovider"]
+    Provideridentifier = ["Zhcv3careproviderid"]
+    Providerpatientrelation = ["Cv3careprovidervisitrole"]
+    Providerspecialty = ["Zhcv3careprovider"]
+    Rxmedadministrations = ["Cv3ordertaskoccurrence"]
+    Rxordersandprescriptions = ["Cv3order"]
+    Rxordersandprescriptions = ["Sxaambclientprescription"]
+    Treatmentadmin = ["Cv3ordertaskoccurrence"]
+    Treatmentorder = ["Cv3order"]
+    Zhserviceline = ["Zhservice"]
+  }
+
+  cerner_v2 {
+    default {
+      Allergies = ["Allergy"]
+      Claim = ["Procedure"]
+      Clinicalencounter = ["Encounter"]
+      Diagnosis = ["Diagnosis", "Problem"]
+      Encountercarearea = ["Enclochist"]
+      Encounterprovider = ["Encprsnlreltn"]
+      Encounterreason = ["Diagnosis", "Encounter"]
+      Facility = ["Codevalue"]
+      Healthmaintenance = ["Hmrecommendation"]
+      Immunization = ["Cemedresult", "Immunizationmodifier"]
+      Insurance = ["Encplanreltn"]
+      Labresult = ["Clinicalevent"]
+      Labmapperdict = ["Zhv500eventcode"]
+      Microbioorder = ["Orders"]
+      Microbioresult = ["Clinicalevent", "Orders"]
+      Observation = ["Clinicalevent", "Clinicaleventdef", "Clinicaleventexcl", "Encounter", "Orders", "Shxactivity", "Shxactivityexercise"]
+      Patient = ["Patient"]
+      Patientaddress = ["Address"]
+      Patientcontact = ["Address", "Phone"]
+      Patientdetail = ["Address", "Patient"]
+      Patientidentifier = ["Patient", "Personcombine"]
+      Patientreportedmeds = ["Orders", "Ordercompliance"]
+      Procedure = ["Cebolus", "Clinicalevent", "Hmrecommendation", "Hmrecommendation2", "Orderrecon", "Procedure"]
+      Provider = ["Zhprsnl"]
+      Providercontact = ["Zhprsnl"]
+      Providerpatientrelation = ["Provpatrel"]
+      Providerspecialty = ["Zhprsnl"]
+      Rxmedadministrations = ["Clinicalevent"]
+      Rxordersandprescriptions = ["Orders"]
+      Treatmentadmin = ["Clinicalevent", "Product"]
+      Treatmentorder = ["Orders"]
+      Zhserviceline = ["Hospserv"]
+    }
+  }
+}

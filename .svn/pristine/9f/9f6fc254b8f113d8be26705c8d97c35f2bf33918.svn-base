@@ -1,0 +1,20 @@
+crossix {
+  optumrx {
+    Orx = ["MemberCoverage", "MemberCoveragePartd", "PharmacyClaim", "PharmacyClaimPartd", "MemberPHI" ]
+  }
+  nhi {
+    Nhi = ["InpatientConfinement", "LabResultHIPAA", "MedicalClaim", "MemberCoverage", "MemberCoveragePartd", "MemberPHI"]
+  }
+  epic_v2 {
+    RxOrderPHI = ["EP2TempPatient", "EP2TempPatientDetails","EP2TempPatientId","PatientSummary", "PatientPHI"]
+    RxOrder = ["PrescriptionsMedorders","BackendMedMapping","BackendSetHGPIDs","DcdrExport","DcdrWhitelist","DcdrImport"]
+  }
+  asent {
+    RxOrderPHI = ["ASTempPatient", "ASTempPatientDetails","ASTempPatientId","PatientSummary", "PatientPHI"]
+    RxOrder = ["PrescriptionsErx","BackendMedMapping","BackendSetHGPIDs","DcdrExport","DcdrWhitelist","DcdrImport"]
+  }
+  cerner_v2 {
+    RxOrderPHI = ["CR2TempPatient", "CR2TempPatientDetails","CR2TempPatientId","PatientSummary", "PatientPHI"]
+    RxOrder = ["PrescriptionsOrders","BackendMedMapping","BackendSetHGPIDs","DcdrExport","DcdrWhitelist","DcdrImport"]
+  }
+}

@@ -1,0 +1,98 @@
+<html>
+<head>
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    <style>
+        * {
+            margin: 0px;
+        }
+        h1, h2, h3 {
+            margin-top: 16px;
+            margin-bottom: 8px;
+        }
+        h4, h5 {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        .colList {
+            font-size: 12px;
+        }
+        .emrImpl {
+            padding: 16px;
+            background-color: #efefef;
+            border-radius: 8px;
+            border: 1px solid #DDD;
+            margin: 16px;
+        }
+        .emrConfig {
+            background-color: #d8dfe2;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+        .entity {
+            border-top: 1px solid #CCC;
+            margin-bottom: 12px;
+        }
+        .notes {
+            padding-bottom: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+            background-color: #f5f4de;
+            border-radius: 8px;
+            border: 1px dotted;
+            margin-bottom: 8px;
+            margin-top: 8px;
+        }
+        .rt {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0;
+        }
+        .rtcell {
+            box-sizing: border-box;
+            flex-grow: 1;
+            width: 100%;
+            padding: 8px;
+            overflow: hidden;
+            list-style: none;
+        }
+        .rt1col > .rtCell {width: 100%;}
+        .rt2col > .rtcell { width: 50%; }
+        .rt4col > .rtcell { width: 25%; }
+        .rt6col > .rtcell { width: 16.6%; }
+        .visNode {
+            width: 98%;
+            height: 512px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<script>
+    var optionsIO = {
+        useDefaultGroups: false,
+        groups: {
+            Xform: {shape: 'icon', icon: {face: 'Ionicons', code: '\uf43d', size: 64, color: '#57169a'}},
+            InputT: {shape: 'icon', icon: {face: 'Ionicons', code: '\uf4f4', size: 32, color: '#9a4242'}},
+            MapT: {shape: 'icon', icon: {face: 'Ionicons', code: '\uf3e8', size: 32, color: '#4c84ff'}},
+            TAlias: {shape: 'icon', icon: {face: 'Ionicons', code: '\uf2ab', size: 50, color: '#4b9a65'}},
+            EmrImpl: {shape: 'icon', icon: {face: 'Ionicons', code: '\uf47c', size: 128, color: '#9a9523'}},
+            Entity: {shape: 'icon', icon: {face: 'Ionicons', code: '\uf318', size: 72, color: '#000e9a'}}
+        },
+        // layout: {hierarchical: {sortMethod: 'directed', direction: 'LR'}},
+        edges: {
+            smooth: true,
+            arrows: {to : true},
+            dashes: true
+        },
+        physics: {enabled: false}
+    };
+</script>
+</html>

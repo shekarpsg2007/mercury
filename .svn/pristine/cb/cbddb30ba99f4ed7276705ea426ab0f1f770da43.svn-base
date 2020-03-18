@@ -1,0 +1,61 @@
+
+EMR = crossix
+GROUP = crossix
+CLIENT_DS_ID  = crossix
+CLIENT_DS_NAME  = crossix
+PACKAGE_ROOT  = com.humedica.mercury.etl
+HOME_DIR =/user/rbabu
+
+#ORX
+#EMR_DATA_ROOT=/user/rbabu/data/orx/weekly/20180405_20180411
+ZIP_DATA_ROOT=/optum/crossix/data/prov/
+#MEMBER_PHI_DATA_ROOT=/user/rbabu/data/orx/weekly/20171214_20171220
+CARRIERSBLC2V2_DATA_ROOT=/optum/crossix/data/prov/
+HISTORY_DATA_ROOT=/user/rbabu/data/orx/weekly/20161124_20161130
+#WEEKLY ORX DATA PREPARATION
+NDC_WEEKLY_MASTER=/optum/crossix/data/nhi/incremental/exports/NDC/201803
+PHARMACY_WEEKLY_MASTER=/optum/crossix/data/nhi/incremental/exports/PHARMACY/201803
+MEMBERPHI_WEEKLY_MASTER=/optum/crossix/data/nhi/incremental/exports/MEMBER_PHI/201803
+ORX_INPUT_DATA_SRC_LOC=/optum/crossix/data/optumrx/incremental/exports/%s/%s
+
+
+#RxOrder
+#EMR_DATA_ROOT=/user/rbabu/data/rxorder/weekly/20180405_20180411
+CDR_DATA_ROOT=/optum/crossix/data/rxorder/monthly/CDR_201803
+COMMON_DATA_ROOT=/optum/crossix/data/rxorder/monthly/CDR_201710_V3/COMMON
+DICT_DATA_ROOT=/user/rbabu/data/rxorder/dictionarytables
+FASTTRACT_CONNECTSTR=jdbc:oracle:thin:@som-racload03.humedica.net:1521/AUTOMTN
+FASTTRACT_USER=fasttrack
+FASTTRACT_PWD=Fs9056azePRN1zcwq05
+COMMON_CONNECTSTR=jdbc:oracle:thin:@som-racdeid02:1521/DEIDLSDW
+COMMON_USER=crossix[COMMON]
+COMMON_PWD=Cr0ss1xC0n
+STAGING_BASEDIR=/optum/mercury/data/staged/standard/
+RXORDER_WEEKLY_TARGET_BASEDIR = /user/rbabu/data/rxorder/weekly/
+HADOOP_STAGING_SRC=/optum/mercury/data/staged/standard/%s/%s/201804/*
+SHELF_MANIFEST_ENTRY_FT=/optum/crossix/data/prov/201804/SHELF_MANIFEST_ENTRY_FT/*
+CLIENT_DATA_SRC=/optum/crossix/data/rxorder/monthly/CDR_201804/CLIENT_DATA_SRC/*
+CLIENT_DATA_STREAM=/optum/crossix/data/rxorder/monthly/CDR_201804/CLIENT_DATA_STREAM/*
+
+
+
+#NHI
+EMR_DATA_ROOT=/user/rbabu/data/nhi/monthly/201802
+MEMBER_PHI_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/MEMBER_PHI/201803
+MEMBER_COVERAGE_PARTD_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/MEMBER_COVERAGE_PARTD/201803
+MEMBER_COVERAGE_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/MEMBER_COVERAGE/201803
+LAB_RESULT_HIPAA_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/LAB_RESULT_HIPAA/201803
+REVENUE_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/REVENUE/201803
+PROCEDURE_MODIFIER_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/PROCEDURE_MODIFIER/201803
+NDC_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/NDC/201803
+INPATIENT_CONFINEMENT_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/INPATIENT_CONFINEMENT/201803
+PROCEDURE_CODE_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/PROCEDURE_CODE/201803
+DRG_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/DRG/201803
+DIAGNOSIS_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/DIAGNOSIS/201803
+PLACE_OF_SERVICE_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/PLACE_OF_SERVICE/201803
+PROVIDER_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/PROVIDER/201803
+MEDICAL_CLAIM_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/MEDICAL_CLAIM/201803
+PHYSICIAN_CLAIM_STD_COST_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/PHYSICIAN_CLAIM_STD_COST/201803
+FACILITY_CLAIM_STD_COST_MONTHLY_MASTER=/optum/crossix/data/nhi/incremental/exports/FACILITY_CLAIM_STD_COST/201803
+LABRESULTHIPAA_DATA_ROOT=/user/rbabu/data/nhi/monthly/201803/LAB_RESULT_HIPAA_PART
+MEDICALCLAIM_DATA_ROOT=/user/rbabu/data/nhi/monthly/201802/MEDICAL_CLAIM_PART

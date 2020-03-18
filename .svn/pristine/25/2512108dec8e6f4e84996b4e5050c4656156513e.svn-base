@@ -1,0 +1,218 @@
+
+
+
+
+OptumRx Data Preparation
+Identify dates for the weeks  "20180503,20180504,20180505,20180506,20180507,20180508,20180509"
+Check is there any new files for NDC, PHARMACY & MEMBER_PHI for latest NHI.
+Review all 4 tables to ensure we have files for each day.
+
+CrossixORXOpUtility.prepareWeeklyORXInputData(sqlContext, "20180503,20180504,20180505,20180506,20180507,20180508,20180509", cfg)
+
+CrossixORXOpUtility.runOrxBuild(cfg)
+CrossixORXOpUtility.postValidateORXTableColumns(sqlContext, "20180503_20180509", cfg)
+Create JIRA for QC
+RxOrder Data Preparation
+
+Run Below queries to ensure we have all files transformed is staged.
+
+
+
+Primary Tables..
+
+
+
+CrossixRxOrderDataPrepUtil.processRxORderDataPreparation(sqlContext, "20180503,20180504,20180505,20180506,20180507,20180508,20180509", cfg, "_EP2_#PATREG,_EP2_#MEDORDERS,_AS_#AS_ERX,_CR2_#ORDERS")
+
+CrossixRxOrderDataPrepUtil.processRxORderDataPreparation(sqlContext, "20180503,20180504,20180505,20180506,20180507,20180508,20180509", cfg, "_AS_#AS_PATDEM,_CR2_#ENCOUNTER,_CR2_#ENC_ALIAS,_CR2_#HUM_DRG")
+
+CrossixRxOrderDataPrepUtil.processRxORderDataPreparation(sqlContext, "20180503,20180504,20180505,20180506,20180507,20180508,20180509", cfg, "_CR2_#ORDER_ACTION,_CR2_#ORDER_DETAIL,_CR2_#PERSON,_CR2_#PERSON_ALIAS")
+
+CrossixRxOrderDataPrepUtil.processRxORderDataPreparation(sqlContext, "20180503,20180504,20180505,20180506,20180507,20180508,20180509", cfg, "_EP2_#PATIENT_FYI_FLAGS,_EP2_#PAT_RACE,_EP2_#PATIENT_3,_EP2_#IDENTITY_ID")
+
+
+
+RXORDER PRIMARY TABLES ==>
+        EPIC - MEDORDERS,
+        AS - AS_ERX,
+        CR2 - ORDERS
+ RXORDER SUPPORTING TABLES ==>
+        EPIC - PATREG, PATIENT_FYI_FLAGS, PAT_RACE, PATIENT_3,IDENTITY_ID,  ZH_STATE, ZH_CLARITYDRG, MEDADMINREC, ZH_CLARITYDEPT, ZH_BENEPLAN, ZH_MED_UNIT
+        AS - AS_PATDEM, AS_ZC_MEDICATION_DE
+        CR2 - ENCOUNTER, ENC_ALIAS, HUM_DRG, ORDER_ACTION, ORDER_DETAIL, PERSON, PERSON_ALIAS, ZH_CODE_VALUE, ZH_MED_IDENTIFIER, ZH_NOMENCLATURE, ZH_ORDER_CATALOG_ITEM_R, ADDRESS
+
+ CDR Tables ==> MAP_ORDERTYPE, MAP_PREDICATE_VALUES, PATIENT_MPI, MAP_PATIENT_TYPE, ZH_MED_MAP_DCC, ZH_PROVIDER_MASTER_XREF, ZCM_DATASRC_PRIORITY, MAP_GENDER, MAP_RACE, MAP_ETHNICITY, MAP_DECEASED_INDICATOR, MAP_LANGUAGE, MAP_MARITAL_STATUS, REF_DEATH_INDEX, MAP_MED_DISC_REASON,
+                MAP_MED_ROUTE, MAP_MED_SCHEDULE, MAP_MED_ORDER_STATUS, ZCM_DCDR_EXCLUDE, ZH_MED_MAP_PREFNDC, FACILITY_XREF, PROVIDER_XREF.
+
+ COMMON ==> SHELF_MANIFEST_ENTRY_FT,CLIENT_DATA_SRC, CLIENT_DATA_STREAM
+
+
+
+
+
+1. select * from pipeline_file_stats WHERE TRACKED_TIME IS NOT NULL and STAGED_TIME IS NULL AND SUBSTR(TO_CHAR(TRACKED_TIME, 'YYYYMMDD'), 1, 9) IN ('20180503','20180504','20180505','20180506','20180507','20180508','20180509’)
+
+
+Select data_stream_id, count(case when staged_time is not null then 1 else null end) as Staged, count(case when staged_time is null then 1 else null end) as Unstaged from pipeline_file_stats group by data_stream_id having count(case when staged_time is null then 1 else null end)>0 order by unstated
+select * from pipeline_file_stats WHERE TRANSFORMED_TIME IS NOT NULL and STAGED_TIME IS NULL
+
+
+Select data_stream_id, count(case when staged_time is not null then 1 else null end) as Staged, count(case when staged_time is null then 1 else null end) as Unstaged from pipeline_file_stats group by data_stream_id having count(case when staged_time is null then 1 else null end)>0 order by unstaged
+If you see any datasrcId, then need to trigger staging these missing files, by running "sudo -u mercury ./StandaloneRetries.sh prod PROD_PROD 7375 60"
+
+Download latest CDR tables.
+
+./acquireRxOrderTable.sh MAP_ORDERTYPE $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_PREDICATE_VALUES $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh PATIENT_MPI $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_PATIENT_TYPE $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh ZH_MED_MAP_DCC $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh ZH_PROVIDER_MASTER_XREF $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh ZCM_DATASRC_PRIORITY $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_GENDER $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_RACE $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_ETHNICITY $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_DECEASED_INDICATOR $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_LANGUAGE $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_MARITAL_STATUS $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh REF_DEATH_INDEX $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_MED_DISC_REASON $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_MED_ROUTE $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_MED_SCHEDULE $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh MAP_MED_ORDER_STATUS $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh ZCM_DCDR_EXCLUDE $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTable.sh ZH_MED_MAP_PREFNDC $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD $CDRSPLITBY
+
+./acquireRxOrderTableWithCols.sh FACILITY_XREF $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD "GROUPID" "GROUPID,FACILITYID,HGFACID,CLIENT_DS_ID"
+
+./acquireRxOrderTableWithCols.sh PROVIDER_XREF $SCHEMA $DEST $CDRCONNECT $CDRUSER $CDRPWD "GROUPID" "GROUPID,PROVIDERID,HGPROVID,CLIENT_DS_ID"
+
+
+./acquireRxOrderTable.sh SHELF_MANIFEST_ENTRY_FT FASTTRACK $DEST $FASTTRACKCONNECT $FASTTRACKUSER $FASTTRACKPWD $FASTTRACKSPLITBY
+
+./acquireRxOrderTable.sh CLIENT_DATA_SRC METADATA $DEST $FASTTRACKCONNECT $FASTTRACKUSER $FASTTRACKPWD "CLIENT_DATA_SRC_ID"
+
+./acquireRxOrderTable.sh CLIENT_DATA_STREAM METADATA $DEST $FASTTRACKCONNECT $FASTTRACKUSER $FASTTRACKPWD "CLIENT_DATA_SRC_ID"
+
+
+CrossixRxOrderDataPrepUtil.processRxORderDataPreparation(sqlContext, "20180503,20180504,20180505,20180506,20180507,20180508,20180509", cfg, "_EP2_#PATREG,_EP2_#MEDORDERS,_AS_#AS_ERX,_CR2_#ORDERS")
+
+CrossixRxOrderDataPrepUtil.processRxORderDataPreparation(sqlContext, "20180503,20180504,20180505,20180506,20180507,20180508,20180509", cfg, "_AS_#AS_PATDEM,_CR2_#ENCOUNTER,_CR2_#ENC_ALIAS,_CR2_#HUM_DRG")
+
+CrossixRxOrderDataPrepUtil.processRxORderDataPreparation(sqlContext, "20180503,20180504,20180505,20180506,20180507,20180508,20180509", cfg, "_CR2_#ORDER_ACTION,_CR2_#ORDER_DETAIL,_CR2_#PERSON,_CR2_#PERSON_ALIAS")
+
+CrossixRxOrderDataPrepUtil.processRxORderDataPreparation(sqlContext, "20180503,20180504,20180505,20180506,20180507,20180508,20180509", cfg, "_EP2_#PATIENT_FYI_FLAGS,_EP2_#PAT_RACE,_EP2_#PATIENT_3,_EP2_#IDENTITY_ID")
+
+writeDictionaryTable(sqlContext, dateStr, "_AS_", "AS_ZC_MEDICATION_DE", cfg)
+
+writeDictionaryTable(sqlContext, dateStr, "_EP2_", "ZH_STATE", cfg)
+
+writeDictionaryTable(sqlContext, dateStr, "_EP2_", "ZH_CLARITYDRG", cfg)
+
+writeDictionaryTable(sqlContext, dateStr, "_EP2_", "MEDADMINREC", cfg)
+
+writeDictionaryTable(sqlContext, dateStr, "_EP2_", "ZH_CLARITYDEPT", cfg)
+
+writeDictionaryTable(sqlContext, dateStr, "_EP2_", "ZH_BENEPLAN", cfg)
+
+writeDictionaryTable(sqlContext, dateStr, "_EP2_", "ZH_MED_UNIT", cfg)
+
+writeDictionaryTable(sqlContext, dateStr, "_CR2_", "ZH_CODE_VALUE",cfg)
+
+writeDictionaryTable(sqlContext, dateStr, "_CR2_", "ZH_MED_IDENTIFIER", cfg)
+
+writeDictionaryTable(sqlContext, dateStr, "_CR2_", "ZH_NOMENCLATURE", cfg)
+
+writeDictionaryTable(sqlContext, dateStr, "_CR2_", "ZH_ORDER_CATALOG_ITEM_R", cfg)
+
+writeDictionaryTable(sqlContext, dateStr, "_CR2_", "ADDRESS", cfg)
+
+CrossixRxOrderDataPrepUtil.processAddress(sqlContext, "20180503_20180509", cfg)
+
+CrossixRxOrderDataPrepUtil.createSHELF_MANIFEST_ENTRY_WCLSID(sqlContext,"20180503_20180509", cfg)
+
+
+
+
+-- RxORDER_PHI - BEGIN
+
+
+Var dateStr="20180503_20180509"
+
+CrossixRxorderOpUtility.processASTempPatientDetails(sqlContext,dateStr, cfg)
+
+CrossixRxorderOpUtility.processEPTempPatientDetails(sqlContext,dateStr, cfg)
+
+CrossixRxorderOpUtility.processCRTempPatientDetails(sqlContext,dateStr, cfg)
+
+
+CrossixRxorderOpUtility.mergeAllTempDetails(sqlContext,dateStr, cfg)
+
+CrossixRxorderOpUtility.rxorder_patient_summary(sqlContext,dateStr,cfg)
+
+CrossixRxorderOpUtility.rxorder_patient_phi(sqlContext, dateStr, cfg)
+
+-- RxORDER_PHI - END
+
+-- RxORDER - BEGIN
+
+CrossixRxorderOpUtility.processASRxOrder(sqlContext, dateStr, cfg, new RxordersandprescriptionsErx(cfg))
+
+CrossixRxorderOpUtility.processEP2RxOrder(sqlContext,  dateStr, new RxordersandprescriptionsMedorders(cfg), cfg)
+
+CrossixRxorderOpUtility.processCR2RxOrder(sqlContext, dateStr,cfg)
+
+CrossixRxorderOpUtility.mergeAllRxOrders(sqlContext,dateStr, cfg)
+
+CrossixRxorderOpUtility.rxorder_backend_med_mapping(sqlContext,dateStr, cfg)
+
+CrossixRxorderOpUtility.rxorder_backend_seth_gpids(sqlContext,dateStr, cfg)
+
+CrossixRxorderOpUtility.rxorder_dcdr_rxorder_export(sqlContext, dateStr,cfg)
+
+CrossixRxorderOpUtility.rxorder_dcdr_rxorder_whitelist(sqlContext,dateStr, cfg)
+
+CrossixRxorderOpUtility.rxorder_dcdr_rxorder_import(sqlContext,dateStr, cfg)
+
+
+-- RxORDER - END
+
+CrossixRxorderOpUtility.postValidateRXORDERTableColumns(sqlContext, "20180503_20180509", cfg)
+
+CrossixRxorderOpUtility.postValidateRXORDERPHITableColumns(sqlContext, "20180503_20180509", cfg)
+
+Append new files to existing Jira.
+
+CrossixORXOpUtility.convertParquet2CSV(sqlContext, "20180503_20180509", cfg)
+
+CrossixORXOpUtility.convertCSV2GZ(sqlContext, "20180503_20180509",sc, cfg)
+
+CrossixRxOrderDataPrepUtil.convertParquet2csv(sqlContext, "20180503_20180509", cfg)
+
+CrossixRxOrderDataPrepUtil.convertCsv2GZ(sqlContext, "20180503_20180509",sc, cfg)
+
+
+
+
+
+
+
